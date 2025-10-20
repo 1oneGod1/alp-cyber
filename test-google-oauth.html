@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Management System - Google OAuth Test</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .login-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .method-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        
+        .method-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .method-card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .method-card p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-google {
+            background: #4285f4;
+        }
+        
+        .btn-google:hover {
+            background: #357ae8;
+        }
+        
+        #g_id_signin {
+            margin-top: 10px;
+        }
+        
+        .result-box {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+        
+        .result-box.show {
+            display: block;
+            animation: slideIn 0.5s;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .result-box h3 {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+        
+        .user-info {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .user-info p {
+            margin: 8px 0;
+            color: #333;
+        }
+        
+        .user-info strong {
+            color: #667eea;
+        }
+        
+        .token-display {
+            background: #2c3e50;
+            color: #2ecc71;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            word-break: break-all;
+            margin-top: 10px;
+        }
+        
+        .test-btn {
+            background: #28a745;
+            margin-top: 15px;
+        }
+        
+        .test-btn:hover {
+            background: #218838;
+        }
+        
+        .error {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+        }
+        
+        .error h3 {
+            color: #dc3545;
+        }
+        
+        .config-info {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .config-info strong {
+            color: #856404;
+        }
+        
+        @media (max-width: 768px) {
+            .login-methods {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Document Management System</h1>
+        <p class="subtitle">Google OAuth 2.0 Testing Page</p>
+        
+        <div class="config-info">
+            <strong>⚠️ Setup Required:</strong> Make sure you've configured Google OAuth credentials in `.env` file. 
+            See <code>GOOGLE_OAUTH_SETUP.md</code> for instructions.
+        </div>
+        
+        <div class="login-methods">
+            <!-- Method 1: Server-side Flow -->
+            <div class="method-card">
+                <h2>🔄 Server-side Flow</h2>
+                <p>Traditional OAuth 2.0 flow with server-side code exchange. Best for full control over the authentication process.</p>
+                <a href="http://localhost:3000/auth/google" class="btn btn-google">
+                    Login with Google
+                </a>
+            </div>
+            
+            <!-- Method 2: Client-side Flow -->
+            <div class="method-card">
+                <h2>⚡ Client-side Flow</h2>
+                <p>Google Sign-In with one tap. Faster and better UX. Credential verification handled by our backend.</p>
+                <div id="g_id_onload"
+                     data-client_id="YOUR_GOOGLE_CLIENT_ID"
+                     data-callback="handleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin" 
+                     data-type="standard"
+                     data-size="large"
+                     data-theme="outline"
+                     data-text="sign_in_with"
+                     data-shape="rectangular"
+                     data-logo_alignment="left">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Result Box -->
+        <div id="result" class="result-box"></div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE_URL = 'http://localhost:3000';
+        
+        // Handle Google Sign-In response (Method 2: Client-side)
+        async function handleCredentialResponse(response) {
+            console.log("🔑 Received Google credential");
+            showLoading();
+            
+            try {
+                // Send credential to our backend for verification
+                const result = await fetch(`${API_BASE_URL}/auth/google/verify`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        credential: response.credential
+                    })
+                });
+
+                const data = await result.json();
+                
+                if (result.ok) {
+                    console.log('✅ Backend response:', data);
+                    displaySuccess(data);
+                    
+                    // Save tokens to localStorage
+                    localStorage.setItem('accessToken', data.accessToken);
+                    localStorage.setItem('refreshToken', data.refreshToken);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                } else {
+                    throw new Error(data.message || 'Login failed');
+                }
+            } catch (error) {
+                console.error('❌ Login error:', error);
+                displayError(error.message);
+            }
+        }
+
+        // Display loading state
+        function showLoading() {
+            const resultBox = document.getElementById('result');
+            resultBox.className = 'result-box show';
+            resultBox.innerHTML = `
+                <h3>⏳ Verifying with server...</h3>
+                <p>Please wait while we authenticate your Google account.</p>
+            `;
+        }
+
+        // Display success
+        function displaySuccess(data) {
+            const resultBox = document.getElementById('result');
+            resultBox.className = 'result-box show';
+            resultBox.innerHTML = `
+                <h3>✅ Login Successful!</h3>
+                <div class="user-info">
+                    ${data.user.avatar ? `<img src="${data.user.avatar}" alt="Avatar" style="width: 64px; height: 64px; border-radius: 50%; margin-bottom: 10px;">` : ''}
+                    <p><strong>Name:</strong> ${data.user.username}</p>
+                    <p><strong>Email:</strong> ${data.user.email}</p>
+                    <p><strong>Role:</strong> ${data.user.role}</p>
+                    <p><strong>User ID:</strong> ${data.user.id}</p>
+                    <p><strong>Provider:</strong> ${data.user.provider}</p>
+                </div>
+                <div>
+                    <p><strong>Access Token (first 100 chars):</strong></p>
+                    <div class="token-display">${data.accessToken.substring(0, 100)}...</div>
+                </div>
+                <button onclick="testProtectedEndpoint('${data.accessToken}')" class="btn test-btn">
+                    🧪 Test Protected Endpoint
+                </button>
+                <button onclick="testDocuments('${data.accessToken}')" class="btn test-btn">
+                    📄 Test Documents API
+                </button>
+            `;
+        }
+
+        // Display error
+        function displayError(message) {
+            const resultBox = document.getElementById('result');
+            resultBox.className = 'result-box show error';
+            resultBox.innerHTML = `
+                <h3>❌ Login Failed</h3>
+                <p>${message}</p>
+                <p><strong>Troubleshooting:</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Check if server is running (http://localhost:3000)</li>
+                    <li>Verify Google OAuth credentials in .env file</li>
+                    <li>Check browser console for detailed errors</li>
+                    <li>See GOOGLE_OAUTH_SETUP.md for setup instructions</li>
+                </ul>
+            `;
+        }
+
+        // Test protected endpoint (Profile)
+        async function testProtectedEndpoint(token) {
+            try {
+                console.log('🧪 Testing /profile endpoint...');
+                const result = await fetch(`${API_BASE_URL}/profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await result.json();
+                
+                if (result.ok) {
+                    alert('✅ Protected Endpoint Test PASSED!\n\n' + JSON.stringify(data, null, 2));
+                } else {
+                    alert('❌ Protected Endpoint Test FAILED!\n\n' + JSON.stringify(data, null, 2));
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        // Test documents API
+        async function testDocuments(token) {
+            try {
+                console.log('🧪 Testing /documents endpoint...');
+                const result = await fetch(`${API_BASE_URL}/documents`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await result.json();
+                
+                if (result.ok) {
+                    alert('✅ Documents API Test PASSED!\n\n' + 
+                          'Found ' + data.documents.length + ' document(s)\n\n' +
+                          JSON.stringify(data, null, 2));
+                } else {
+                    alert('❌ Documents API Test FAILED!\n\n' + JSON.stringify(data, null, 2));
+                }
+            } catch (error) {
+                alert('❌ Error: ' + error.message);
+            }
+        }
+
+        // Check if running from file:// protocol
+        if (window.location.protocol === 'file:') {
+            console.warn('⚠️ Running from file:// protocol. Google Sign-In may not work properly.');
+            console.log('💡 Consider using a local server (e.g., Live Server in VS Code)');
+        }
+
+        // Auto-load saved session
+        window.addEventListener('load', () => {
+            const savedToken = localStorage.getItem('accessToken');
+            const savedUser = localStorage.getItem('user');
+            
+            if (savedToken && savedUser) {
+                console.log('📦 Found saved session');
+                // Could auto-display saved user info here
+            }
+        });
+    </script>
+</body>
+</html>

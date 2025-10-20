@@ -1,0 +1,457 @@
+{
+  "info": {
+    "name": "Document Management System - JWT RBAC ABAC",
+    "_postman_id": "12345678-1234-1234-1234-123456789012",
+    "description": "Collection untuk testing Sistem Manajemen Dokumen dengan JWT, RBAC, dan ABAC",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Register User Baru",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"test123\",\n  \"role\": \"user\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login sebagai Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"admin_token\", jsonData.accessToken);",
+                  "    pm.environment.set(\"access_token\", jsonData.accessToken);",
+                  "    console.log(\"Admin token saved:\", jsonData.accessToken);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login sebagai User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.environment.set(\"user_token\", jsonData.accessToken);",
+                  "    console.log(\"User token saved:\", jsonData.accessToken);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"user\",\n  \"password\": \"user123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/refresh",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "refresh"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Admin Routes (RBAC)",
+      "item": [
+        {
+          "name": "✅ Admin: Lihat Semua User (SUKSES)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/users",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "users"]
+            },
+            "description": "Admin dapat melihat semua user. Expected: Status 200"
+          },
+          "response": []
+        },
+        {
+          "name": "❌ User: Lihat Semua User (GAGAL - 403)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/users",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "users"]
+            },
+            "description": "User biasa TIDAK bisa akses endpoint admin. Expected: Status 403 Forbidden"
+          },
+          "response": []
+        },
+        {
+          "name": "Admin: Hapus User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/admin/users/3",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "users", "3"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Documents (RBAC + ABAC)",
+      "item": [
+        {
+          "name": "Lihat Semua Dokumen (sebagai Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/documents",
+              "host": ["{{base_url}}"],
+              "path": ["documents"]
+            },
+            "description": "Admin melihat SEMUA dokumen"
+          },
+          "response": []
+        },
+        {
+          "name": "Lihat Semua Dokumen (sebagai User)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/documents",
+              "host": ["{{base_url}}"],
+              "path": ["documents"]
+            },
+            "description": "User hanya melihat dokumennya sendiri"
+          },
+          "response": []
+        },
+        {
+          "name": "Buat Dokumen sebagai Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Dokumen Admin - Test ABAC\",\n  \"content\": \"Ini adalah dokumen milik admin untuk testing ABAC\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/documents",
+              "host": ["{{base_url}}"],
+              "path": ["documents"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Buat Dokumen sebagai User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Dokumen User - Test ABAC\",\n  \"content\": \"Ini adalah dokumen milik user untuk testing ABAC\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/documents",
+              "host": ["{{base_url}}"],
+              "path": ["documents"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Lihat Detail Dokumen (ABAC)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/documents/1",
+              "host": ["{{base_url}}"],
+              "path": ["documents", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Dokumen (ABAC)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Dokumen Updated\",\n  \"content\": \"Konten dokumen yang sudah diupdate\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/documents/1",
+              "host": ["{{base_url}}"],
+              "path": ["documents", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "❌ User: Hapus Dokumen Admin (GAGAL - 403)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/documents/1",
+              "host": ["{{base_url}}"],
+              "path": ["documents", "1"]
+            },
+            "description": "User mencoba hapus dokumen milik admin (ID=1). Expected: Status 403 Forbidden"
+          },
+          "response": []
+        },
+        {
+          "name": "✅ User: Hapus Dokumen Sendiri (SUKSES)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{user_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/documents/2",
+              "host": ["{{base_url}}"],
+              "path": ["documents", "2"]
+            },
+            "description": "User menghapus dokumennya sendiri (ID=2). Expected: Status 200"
+          },
+          "response": []
+        },
+        {
+          "name": "✅ Admin: Hapus Dokumen Siapapun (SUKSES)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/documents/2",
+              "host": ["{{base_url}}"],
+              "path": ["documents", "2"]
+            },
+            "description": "Admin bisa hapus dokumen siapapun. Expected: Status 200"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Profile",
+      "item": [
+        {
+          "name": "Lihat Profil Sendiri",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["profile"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profil",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"newusername\",\n  \"password\": \"newpassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/profile",
+              "host": ["{{base_url}}"],
+              "path": ["profile"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Root - API Info",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": ["{{base_url}}"],
+          "path": [""]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    }
+  ]
+}
