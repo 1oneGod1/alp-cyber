@@ -403,14 +403,10 @@ Setelah fondasi ini berjalan dengan baik, Anda bisa:
 5. Implementasi rate limiting
 6. Tambahkan unit tests
 
-## 📞 Support
-
-Jika ada pertanyaan atau issues, silakan hubungi tim development.
-
----
 
 **Version:** 1.0.0  
 **Last Updated:** 2025-10-21
 #   a l p - c y b e r 
  
  
+
