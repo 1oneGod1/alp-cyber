@@ -2,12 +2,9 @@
 
 ## 🏗️ System Architecture Overview
 
-```
-<img width="394" height="573" alt="Gambar1" src="https://github.com/user-attachments/assets/94d02687-1562-42e1-ab33-6c7dd24df5e0" />
+<img width="394" height="573" alt="Gambar1" src="https://github.com/user-attachments/assets/5fd87e50-955e-4db5-988e-5a49fabd45a2" />
 
-```
 
----
 
 ## 🔄 Request Flow Diagram
 
