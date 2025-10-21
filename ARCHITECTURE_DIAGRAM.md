@@ -2,7 +2,7 @@
 
 ## 🏗️ System Architecture Overview
 
-<img width="394" height="573" alt="Gambar1" src="https://github.com/user-attachments/assets/5fd87e50-955e-4db5-988e-5a49fabd45a2" />
+<img width="1354" height="1534" alt="Arhitecture" src="https://github.com/user-attachments/assets/a1f89760-9147-4695-8aac-c652843de8dc" />
 
 
 
