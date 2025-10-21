@@ -47,61 +47,48 @@ npm run start:v2
 
 ## ✨ Key Features
 
-<table>
-<tr>
-<td width="50%">
-
 ### 🔐 Authentication & Authorization
-- ✅ JWT-based authentication (Access + Refresh tokens)
+- ✅ JWT-based authentication (access + refresh tokens)
 - ✅ Google OAuth 2.0 integration
-- ✅ **RBAC** (Role-Based Access Control)
-- ✅ **ABAC** (Attribute-Based Access Control)
+- ✅ Role-Based Access Control (RBAC)
+- ✅ Attribute-Based Access Control (ABAC)
 - ✅ Bcrypt password hashing (10 rounds)
 - ✅ Account lockout after 5 failed attempts
 
 ### 🗄️ Database & Storage
 - ✅ MongoDB with Mongoose ODM
-- ✅ Schema validation & hooks
+- ✅ Schema validation & lifecycle hooks
 - ✅ Indexed queries for performance
-- ✅ Automated database seeding
-- ✅ Transaction support
+- ✅ Automated database seeding script
+- ✅ Transaction-ready data access layer
 
-### 🛡️ Security Features
-- ✅ **Multi-layer rate limiting** (Auth, API, Registration)
-- ✅ **Input validation** with express-validator
-- ✅ **XSS protection** & sanitization
-- ✅ **NoSQL injection** prevention
-- ✅ **CORS** configuration
-- ✅ **Comprehensive audit logging**
-
-</td>
-<td width="50%">
+### 🛡️ Security & Compliance
+- ✅ Multi-layer rate limiting (auth, API, registration)
+- ✅ Input validation via express-validator
+- ✅ XSS sanitization & NoSQL injection protection
+- ✅ Configurable CORS policy
+- ✅ Comprehensive audit logging trail
 
 ### 📝 Document Management
-- ✅ Full CRUD operations
-- ✅ Ownership validation (ABAC)
-- ✅ Document status (draft, published, archived)
-- ✅ Tagging system
-- ✅ View count tracking
-- ✅ Text search capabilities
+- ✅ Full CRUD lifecycle management
+- ✅ Ownership validation via ABAC
+- ✅ Document states: draft, published, archived
+- ✅ Tagging, metadata, and view counters
+- ✅ Text search support for title/content
 
 ### 📚 Documentation & Testing
-- ✅ **Swagger/OpenAPI 3.0** documentation
-- ✅ **30+ Jest test cases** (100% pass rate)
-- ✅ Supertest API testing
-- ✅ Comprehensive guides & tutorials
-- ✅ Postman collections
+- ✅ Swagger/OpenAPI 3.0 interactive docs
+- ✅ 30+ Jest test cases (100% pass rate)
+- ✅ Supertest-powered API assertions
+- ✅ Postman collections & manual testing guide
+- ✅ Extensive written documentation set
 
-### 🎨 User Interface
-- ✅ Modern responsive SPA
-- ✅ Real-time UI updates
-- ✅ Admin dashboard
-- ✅ Document management interface
-- ✅ Google Sign-In button
-
-</td>
-</tr>
-</table>
+### 🎨 User Experience
+- ✅ Modern responsive SPA frontend
+- ✅ Real-time UI refresh via fetch APIs
+- ✅ Admin dashboard & role-specific screens
+- ✅ Inline notifications & state indicators
+- ✅ Google Sign-In button with OAuth flow
 
 ---
 
@@ -122,11 +109,8 @@ Dokumentasi lengkap tersedia dalam format terstruktur:
 
 ---
 
+npm run dev:v2
 ## 🚀 Usage Guide
-
-<table>
-<tr>
-<td width="50%" valign="top">
 
 ### 🖥️ Server Operations
 ```powershell
@@ -134,7 +118,7 @@ Dokumentasi lengkap tersedia dalam format terstruktur:
 npm run start:v2
 
 # Development (auto-reload)
-npm run dev:v2
+
 
 # Run tests
 npm test
@@ -146,13 +130,10 @@ npm run test:coverage
 node seed.js
 ```
 
-**✅ Server Ready**: http://localhost:3000  
-**📚 API Docs**: http://localhost:3000/api-docs
+- ✅ Server base URL: `http://localhost:3000`
+- 📚 Swagger docs: `http://localhost:3000/api-docs`
 
-</td>
-<td width="50%" valign="top">
-
-### 🔑 Quick Authentication
+### 🔑 Quick Authentication Examples
 ```bash
 # Admin Login
 POST /auth/login
@@ -170,14 +151,9 @@ POST /auth/register
   "fullName": "John Doe"
 }
 
-# Google OAuth
+# Google OAuth Redirect
 GET /auth/google
 ```
-
-</td>
-</tr>
-</table>
-
 ---
 
 ## 🌐 API Endpoints
@@ -189,10 +165,6 @@ GET /auth/google
 | 📖 **API Documentation** | http://localhost:3000/api-docs | Interactive Swagger docs |
 
 ### API Routes
-
-<table>
-<tr>
-<td width="50%" valign="top">
 
 #### 🔐 Authentication
 | Method | Endpoint | Access |
@@ -207,13 +179,10 @@ GET /auth/google
 | Method | Endpoint | Access |
 |--------|----------|--------|
 | `GET` | `/documents` | Authenticated |
-| `GET` | `/documents/:id` | Owner/Admin |
+| `GET` | `/documents/:id` | Owner / Admin |
 | `POST` | `/documents` | Authenticated |
-| `PUT` | `/documents/:id` | Owner/Admin |
-| `DELETE` | `/documents/:id` | Owner/Admin |
-
-</td>
-<td width="50%" valign="top">
+| `PUT` | `/documents/:id` | Owner / Admin |
+| `DELETE` | `/documents/:id` | Owner / Admin |
 
 #### 👤 Profile
 | Method | Endpoint | Access |
@@ -228,73 +197,48 @@ GET /auth/google
 | `DELETE` | `/admin/users/:id` | Admin only |
 | `GET` | `/admin/audit-logs` | Admin only |
 
-> 🔒 **Access Levels**:  
-> - **Public**: No authentication  
-> - **Authenticated**: Valid JWT token  
-> - **Owner/Admin**: Resource owner or admin role  
-> - **Admin only**: Admin role required
-
-</td>
-</tr>
-</table>
+> 🔒 **Access Levels**
+> - **Public** → No authentication required
+> - **Authenticated** → Valid JWT access token
+> - **Owner / Admin** → Resource owner or admin role
+> - **Admin only** → Admin role required
 
 ---
 
 ## 🛠️ Technology Stack
 
-<table>
-<tr>
-<td width="50%" valign="top">
-
 ### Backend & Core
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **Runtime** | Node.js v18+ | JavaScript runtime |
-| **Framework** | Express.js | Web application framework |
-| **Language** | JavaScript | Primary language |
-| **Database** | MongoDB | NoSQL document database |
-| **ODM** | Mongoose | MongoDB object modeling |
+- **Runtime**: Node.js v18+
+- **Framework**: Express.js
+- **Language**: JavaScript (CommonJS modules)
+- **Database**: MongoDB Atlas / local MongoDB
+- **ODM**: Mongoose with schema hooks & indexes
 
 ### Security & Authentication
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| **Auth** | JWT | Token-based authentication |
-| **OAuth** | Google OAuth 2.0 | Social login |
-| **Password** | bcryptjs | Password hashing (10 rounds) |
-| **Rate Limit** | express-rate-limit | DDoS protection |
-| **Validation** | express-validator | Input sanitization |
-| **CORS** | cors | Cross-origin protection |
-
-</td>
-<td width="50%" valign="top">
+- **JWT** for access & refresh tokens
+- **Google OAuth 2.0** social login
+- **bcryptjs** password hashing (10 rounds)
+- **express-rate-limit** for throttling
+- **express-validator** input sanitization
+- **CORS** policy configuration
 
 ### Testing & Quality
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| **Test Framework** | Jest | Unit & integration tests |
-| **API Testing** | Supertest | HTTP assertions |
-| **Coverage** | Jest Coverage | Code coverage reports |
-| **Test Count** | 30+ tests | Comprehensive coverage |
+- **Jest** unit & integration test runner
+- **Supertest** HTTP assertion library
+- **Jest coverage** reports
+- **30+ automated test cases**
 
-### Documentation & Logging
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| **API Docs** | Swagger/OpenAPI 3.0 | Interactive documentation |
-| **Logger** | Winston | Application logging |
-| **HTTP Logger** | Morgan | HTTP request logging |
-| **Audit** | Custom middleware | Action tracking |
+### Documentation & Observability
+- **Swagger / OpenAPI 3.0** interactive docs
+- **Winston** structured application logger
+- **Morgan** HTTP request logging
+- **Custom audit middleware** for compliance trail
 
-### Frontend
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| **HTML5** | Semantic markup | Structure |
-| **CSS3** | Modern styling | Design |
-| **JavaScript** | Vanilla JS | Interactivity |
-| **SPA** | Custom router | Single-page app |
-
-</td>
-</tr>
-</table>
+### Frontend Experience
+- **HTML5** SPA shell
+- **CSS3** responsive styling
+- **Vanilla JavaScript** with Fetch API
+- **Custom router** and role-aware UI states
 
 ---
 
@@ -328,70 +272,42 @@ alp-cyber/
 
 ## 🔐 Security Architecture
 
-<table>
-<tr>
-<td width="50%" valign="top">
+### 🛡️ Defense in Depth
+1. **Rate Limiting** — express-rate-limit (Auth: 5 req/15m, API: 50 req/15m, Register: 3 req/1h)
+2. **Input Validation** — express-validator (XSS, injection, sanitization)
+3. **Authentication** — JWT access (1h) + refresh tokens (7d) + Google OAuth
+4. **Authorization** — RBAC for roles, ABAC for ownership checks, admin bypass
+5. **Audit Trail** — Winston + custom middleware (IP, UA, timestamp)
 
-### 🛡️ Security Layers
-| Layer | Implementation | Details |
-|-------|---------------|---------|
-| **1. Rate Limiting** | express-rate-limit | • Auth: 5 req/15m<br>• API: 50 req/15m<br>• Register: 3 req/1h |
-| **2. Input Validation** | express-validator | • XSS prevention<br>• SQL injection<br>• Sanitization |
-| **3. Authentication** | JWT + OAuth | • Access: 1h<br>• Refresh: 7d<br>• Google OAuth |
-| **4. Authorization** | RBAC + ABAC | • Role checking<br>• Ownership validation<br>• Admin bypass |
-| **5. Audit Trail** | Winston + Custom | • All actions logged<br>• IP tracking<br>• Timestamp |
+### 🔒 Password & Token Policies
+- **Hashing**: bcrypt (10 rounds)
+- **Complexity**: min 8 chars, upper + lower + number
+- **Lockout**: 5 failed attempts → 2h lock
+- **Storage**: no plain-text secrets in DB
+- **Access Token**: 1 hour lifespan (JWT)
+- **Refresh Token**: 7 days lifespan (persisted)
+- **OAuth Token**: managed by Google
 
-</td>
-<td width="50%" valign="top">
-
-### 🔒 Password Security
-| Feature | Configuration |
-|---------|--------------|
-| **Hashing** | bcrypt (10 rounds) |
-| **Complexity** | Min 8 chars, 1 upper, 1 lower, 1 number |
-| **Lockout** | 5 failed attempts = 2h lock |
-| **Storage** | Never stored plain text |
-
-### 🔑 Token Management
-| Token Type | Duration | Storage |
-|------------|----------|---------|
-| Access Token | 1 hour | Memory (JWT) |
-| Refresh Token | 7 days | Database |
-| OAuth Token | Dynamic | Google managed |
-
-### 📊 Security Headers
-- ✅ CORS configuration
-- ✅ Helmet.js protection
+### 📊 Security Headers & Middleware
+- ✅ Configurable CORS origins
+- ✅ Helmet.js baseline hardening
 - ✅ Content Security Policy
-- ✅ XSS protection
-
-</td>
-</tr>
-</table>
+- ✅ Built-in XSS filtering on inputs
 
 ---
 
 ## 🧪 Testing & Quality Assurance
 
-<table>
-<tr>
-<td width="50%" valign="top">
+### Coverage Highlights
+- ✅ Authentication: register, login, refresh
+- ✅ Authorization: RBAC, ABAC, combined flows
+- ✅ Documents: CRUD lifecycle
+- ✅ Error handling: 4xx & 5xx scenarios
+- ✅ Security guards: rate limiting, validation
 
-### Test Coverage
-| Category | Tests | Status |
-|----------|-------|--------|
-| **Authentication** | Register, Login, Refresh | ✅ Passing |
-| **Authorization** | RBAC, ABAC, Combined | ✅ Passing |
-| **Documents** | CRUD operations | ✅ Passing |
-| **Error Handling** | 4xx, 5xx responses | ✅ Passing |
-| **Security** | Rate limiting, validation | ✅ Passing |
+> **Total automated tests**: 30+ Jest + Supertest cases
 
-**Total Tests**: 30+ test cases
-
-</td>
-<td width="50%" valign="top">
-
-### Running Tests
+### Running the Test Suite
 ```powershell
 # Run all tests
 npm test
@@ -403,17 +319,10 @@ npm run test:watch
 npm run test:coverage
 ```
 
-### Testing Tools
-- **Framework**: Jest
-- **HTTP Testing**: Supertest
-- **Coverage**: Istanbul (via Jest)
-- **Assertions**: Expect (Jest)
-
-**Expected Result**: All tests pass ✅
-
-</td>
-</tr>
-</table>
+### Tooling
+- **Framework**: Jest (Expect assertions)
+- **HTTP testing**: Supertest
+- **Coverage**: Istanbul via Jest CLI
 
 ---
 
@@ -430,47 +339,37 @@ npm run test:coverage
 
 ## 🎯 Features Coverage & Rubrik
 
-<table>
-<tr>
-<td width="50%" valign="top">
-
 ### ✅ Core Requirements (110%)
 | Feature | Points | Status |
 |---------|--------|--------|
-| **JWT Authentication** | 15% | ✅ Complete |
-| **RBAC** | 20% | ✅ Complete |
-| **ABAC** | 20% | ✅ Complete |
-| **MongoDB** | 15% | ✅ Complete |
-| **Security** | 15% | ✅ Complete |
-| **Logging & Audit** | 10% | ✅ Complete |
-| **API Documentation** | 10% | ✅ Complete |
-| **Unit Testing** | 5% | ✅ Complete |
+| JWT Authentication | 15% | ✅ Complete |
+| RBAC | 20% | ✅ Complete |
+| ABAC | 20% | ✅ Complete |
+| MongoDB | 15% | ✅ Complete |
+| Security Hardening | 15% | ✅ Complete |
+| Logging & Audit Trail | 10% | ✅ Complete |
+| API Documentation | 10% | ✅ Complete |
+| Unit Testing | 5% | ✅ Complete |
 
 **Subtotal**: **110%**
-
-</td>
-<td width="50%" valign="top">
 
 ### 🌟 Bonus Features (+15%)
 | Feature | Points | Status |
 |---------|--------|--------|
-| **Google OAuth 2.0** | +5% | ✅ Implemented |
-| **Frontend SPA** | +5% | ✅ Implemented |
-| **Advanced Error Handling** | +2% | ✅ Implemented |
-| **Database Seeding** | +1% | ✅ Implemented |
-| **Complete Audit Trail** | +2% | ✅ Implemented |
+| Google OAuth 2.0 | +5% | ✅ Implemented |
+| Frontend SPA | +5% | ✅ Implemented |
+| Advanced Error Handling | +2% | ✅ Implemented |
+| Database Seeding | +1% | ✅ Implemented |
+| Complete Audit Trail | +2% | ✅ Implemented |
 
-**Bonus**: **+15%**
+**Bonus Total**: **+15%**
 
----
-
-### 🏆 Total Score: **125%**
+### 🏆 Final Score
+- Core: **110%**
+- Bonus: **+15%**
+- **Grand Total: 125% ✅**
 
 > ✨ Semua fitur core dan bonus telah diimplementasikan dengan baik!
-
-</td>
-</tr>
-</table>
 
 ---
 
@@ -479,33 +378,22 @@ npm run test:coverage
 ### Interactive Swagger UI
 🌐 **http://localhost:3000/api-docs**
 
-<table>
-<tr>
-<td width="50%" valign="top">
+**Highlights**
+- ✅ *Try It Out* to execute endpoints directly
+- ✅ Built-in authentication schemes (Bearer JWT)
+- ✅ Request & response samples
+- ✅ Complete schema references
+- ✅ Error code documentation for every endpoint
 
-### Features
-- ✅ **Try It Out**: Test endpoints directly
-- ✅ **Authentication**: Built-in auth schemes
-- ✅ **Examples**: Request/response samples
-- ✅ **Schemas**: Complete data models
-- ✅ **Error Codes**: All status codes documented
+**Section Overview**
+| Section | Endpoints |
+|---------|-----------|
+| Authentication | 5 |
+| Documents | 5 |
+| Admin | 3 |
+| Profile | 2 |
 
-</td>
-<td width="50%" valign="top">
-
-### Quick Access
-| Section | Endpoint Count |
-|---------|----------------|
-| Authentication | 5 endpoints |
-| Documents | 5 endpoints |
-| Admin | 3 endpoints |
-| Profile | 2 endpoints |
-
-**Total**: 15+ documented endpoints
-
-</td>
-</tr>
-</table>
+> Total documented endpoints: **15+**
 
 ---
 
@@ -535,11 +423,7 @@ GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
 
 ### Production Checklist
 
-<table>
-<tr>
-<td width="50%" valign="top">
-
-#### ✅ Security
+**Security**
 - [ ] Change all default secrets
 - [ ] Use strong SECRET_KEY (32+ chars)
 - [ ] Enable HTTPS/TLS
@@ -547,20 +431,13 @@ GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
 - [ ] Set secure cookie flags
 - [ ] Update rate limits
 
-</td>
-<td width="50%" valign="top">
-
-#### ✅ Infrastructure
+**Infrastructure**
 - [ ] Production MongoDB URI
 - [ ] Enable database backups
 - [ ] Set up monitoring (logs)
 - [ ] Configure error tracking
-- [ ] Load balancing (if needed)
-- [ ] CDN for static files
-
-</td>
-</tr>
-</table>
+- [ ] Plan for load balancing (if needed)
+- [ ] Use CDN for static files
 
 ### Quick Deploy Commands
 
