@@ -197,6 +197,4 @@ Setelah testing berhasil:
 3. 🎓 Pahami konsep JWT, RBAC, dan ABAC dari code
 4. 🚀 Lanjut ke Langkah 2: Integrasi Database
 
----
 
-**Semoga berhasil! 🎉**

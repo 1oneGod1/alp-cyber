@@ -187,4 +187,3 @@ Invoke-RestMethod -Uri "http://localhost:3000/profile" -Headers $headers
 
 ---
 
-**Ready? Let's go! Follow SETUP_GUIDE_VISUAL.md step by step! 💪**
